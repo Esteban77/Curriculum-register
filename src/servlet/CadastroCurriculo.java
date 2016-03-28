@@ -21,14 +21,27 @@ public class CadastroCurriculo extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String formacao = request.getParameter("formacao");
-		String interese = request.getParameter("areaInterese");
-		String resumo = request.getParameter("resumo");
+		String formacao = retornaParametro(request,"formacao");
+		String interese = retornaParametro(request,"areaInterese");
+		String resumo = retornaParametro(request,"resumo");
+		
+		request.setAttribute("formacao", formacao);
+		
 		
 		PrintWriter out = response.getWriter();
 		out.println("Formação: " + formacao);
 		out.println("Area: " + interese);
 		out.println("Resumo: " + resumo);
+	}
+	
+	private String retornaParametro (HttpServletRequest request, String parametro) throws ServletException{
+		
+		if(request.getParameter(parametro)== null){
+			throw new ServletException();
+		}else{
+			return request.getParameter(parametro);
+		}
+		
 	}
 
 }
